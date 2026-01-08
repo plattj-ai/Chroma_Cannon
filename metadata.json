@@ -1,0 +1,5 @@
+{
+  "name": "Chroma Cannon",
+  "description": "An arcade-style educational game teaching complementary colors through fast-paced shooting mechanics. Destroy enemies by matching their complementary color ammo!",
+  "requestFramePermissions": []
+}
