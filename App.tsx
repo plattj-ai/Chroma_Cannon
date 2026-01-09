@@ -366,10 +366,61 @@ const App: React.FC = () => {
           )}
 
           {gameState === GameState.START_SCREEN && (
-            <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-6 text-center z-30">
-              <h1 className="text-5xl font-black mb-4 tracking-tighter italic">CHROMA<span className="text-blue-500">CANNON</span></h1>
-              <p className="text-slate-400 mb-8 text-xs uppercase tracking-widest">Destroy targets with COMPLEMENTARY colors</p>
-              <button onClick={resetGame} className="px-10 py-4 bg-blue-600 hover:bg-blue-500 rounded-full font-black text-lg border-b-4 border-blue-800">START MISSION</button>
+            <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-6 text-center z-30 overflow-y-auto">
+              <div className="my-auto">
+                <h1 className="text-5xl font-black mb-4 tracking-tighter italic">CHROMA<span className="text-blue-500">CANNON</span></h1>
+                <p className="text-slate-400 mb-8 text-xs uppercase tracking-widest">Destroy targets with COMPLEMENTARY colors</p>
+                <button onClick={resetGame} className="px-10 py-4 bg-blue-600 hover:bg-blue-500 rounded-full font-black text-lg border-b-4 border-blue-800 mb-8">START MISSION</button>
+                
+                {/* Instructions Panel */}
+                <div className="w-full max-w-sm mx-auto bg-slate-900/60 border border-white/10 rounded-2xl p-6 backdrop-blur-md text-left shadow-2xl">
+                  <h3 className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4 border-b border-white/5 pb-2">Mission Intelligence</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="flex gap-1">
+                        <span className="px-2 py-1 bg-white/10 rounded text-[9px] border border-white/20">←</span>
+                        <span className="px-2 py-1 bg-white/10 rounded text-[9px] border border-white/20">→</span>
+                      </div>
+                      <div className="text-[11px] leading-tight"><span className="font-bold text-white block uppercase">Navigate</span> <span className="text-slate-400">Move your ship across the defense perimeter.</span></div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <span className="px-3 py-1 bg-white/10 rounded text-[9px] border border-white/20 w-16 text-center">SPACE</span>
+                      <div className="text-[11px] leading-tight"><span className="font-bold text-white block uppercase">Engage</span> <span className="text-slate-400">Fire your Chroma Cannon to neutralize threats.</span></div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <div className="flex gap-1">
+                        <span className="px-2 py-1 bg-white/10 rounded text-[9px] border border-white/20">A</span>
+                        <span className="px-2 py-1 bg-white/10 rounded text-[9px] border border-white/20">S</span>
+                      </div>
+                      <div className="text-[11px] leading-tight"><span className="font-bold text-white block uppercase">Modulate</span> <span className="text-slate-400">Swap weapon frequency to match vulnerabilities.</span></div>
+                    </div>
+
+                    <div className="pt-4 mt-1 border-t border-white/5 flex flex-col items-center">
+                      <span className="font-bold text-white block uppercase mb-3 text-[11px] text-center w-full">Complementary Matching</span>
+                      <div className="flex flex-col gap-3 items-center">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-3 rounded-full" style={{ backgroundColor: '#FF0000', boxShadow: '0 0 8px #FF0000' }} />
+                          <span className="text-white/20 italic font-black text-[9px]">VS</span>
+                          <div className="w-12 h-3 rounded-full" style={{ backgroundColor: '#00FF00', boxShadow: '0 0 8px #00FF00' }} />
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-3 rounded-full" style={{ backgroundColor: '#0000FF', boxShadow: '0 0 8px #0000FF' }} />
+                          <span className="text-white/20 italic font-black text-[9px]">VS</span>
+                          <div className="w-12 h-3 rounded-full" style={{ backgroundColor: '#FFA500', boxShadow: '0 0 8px #FFA500' }} />
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-3 rounded-full" style={{ backgroundColor: '#FFFF00', boxShadow: '0 0 8px #FFFF00' }} />
+                          <span className="text-white/20 italic font-black text-[9px]">VS</span>
+                          <div className="w-12 h-3 rounded-full" style={{ backgroundColor: '#800080', boxShadow: '0 0 8px #800080' }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 

@@ -1,0 +1,16 @@
+
+runtime: python39
+instance_class: F1
+
+handlers:
+  # Serve all files as static assets
+  - url: /(.*)
+    static_files: \1
+    upload: (.*)
+    secure: always
+
+  # Default to index.html
+  - url: /
+    static_files: index.html
+    upload: index.html
+    secure: always
