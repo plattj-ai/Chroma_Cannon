@@ -457,17 +457,17 @@ const App: React.FC = () => {
         </main>
       </div>
 
-      <footer className="h-40 bg-slate-950 border-t border-white/10 p-4 flex gap-6 items-center justify-center relative z-20">
+      <footer className="h-24 bg-slate-950 border-t border-white/10 p-2 flex gap-4 items-start pt-3 justify-center relative z-20">
         <div className="flex gap-2">
-          <button onPointerDown={() => setInputState('left', true)} onPointerUp={() => setInputState('left', false)} onPointerLeave={() => setInputState('left', false)} className="w-16 h-16 bg-white/5 rounded-xl flex items-center justify-center active:bg-blue-600"><svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M15 19l-7-7 7-7"/></svg></button>
-          <button onPointerDown={() => setInputState('right', true)} onPointerUp={() => setInputState('right', false)} onPointerLeave={() => setInputState('right', false)} className="w-16 h-16 bg-white/5 rounded-xl flex items-center justify-center active:bg-blue-600"><svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M9 5l7 7-7 7"/></svg></button>
+          <button onPointerDown={() => setInputState('left', true)} onPointerUp={() => setInputState('left', false)} onPointerLeave={() => setInputState('left', false)} className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center active:bg-blue-600"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M15 19l-7-7 7-7"/></svg></button>
+          <button onPointerDown={() => setInputState('right', true)} onPointerUp={() => setInputState('right', false)} onPointerLeave={() => setInputState('right', false)} className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center active:bg-blue-600"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M9 5l7 7-7 7"/></svg></button>
         </div>
-        <button onPointerDown={(e) => { e.preventDefault(); if (gameState === GameState.CRASHED) resumeFromCrash(); else if (gameState === GameState.PAUSED) setGameState(GameState.PLAYING); else handleFire(); }} className={`w-28 h-28 rounded-full font-black text-lg shadow-2xl active:scale-90 transition-all border-4 ${gameState === GameState.PAUSED || gameState === GameState.CRASHED ? 'bg-yellow-600 border-yellow-700' : 'bg-red-600 border-red-700'}`}>
+        <button onPointerDown={(e) => { e.preventDefault(); if (gameState === GameState.CRASHED) resumeFromCrash(); else if (gameState === GameState.PAUSED) setGameState(GameState.PLAYING); else handleFire(); }} className={`w-16 h-16 rounded-full font-black text-xs shadow-2xl active:scale-90 transition-all border-4 ${gameState === GameState.PAUSED || gameState === GameState.CRASHED ? 'bg-yellow-600 border-yellow-700' : 'bg-red-600 border-red-700'}`}>
           {gameState === GameState.CRASHED || gameState === GameState.PAUSED ? 'RESUME' : 'FIRE'}
         </button>
-        <button onPointerDown={(e) => { e.preventDefault(); cycleAmmo('next'); }} className="w-32 h-16 bg-white/5 rounded-xl flex flex-col items-center justify-center gap-1 active:bg-blue-600">
-          <span className="text-[10px] text-slate-400 font-bold uppercase">SWAP</span>
-          <div className="w-12 h-4 rounded-full" style={{ backgroundColor: COLORS[currentAmmoIndex].hex }} />
+        <button onPointerDown={(e) => { e.preventDefault(); cycleAmmo('next'); }} className="w-24 h-12 bg-white/5 rounded-xl flex flex-col items-center justify-center gap-0.5 active:bg-blue-600">
+          <span className="text-[8px] text-slate-400 font-bold uppercase">SWAP</span>
+          <div className="w-8 h-3 rounded-full" style={{ backgroundColor: COLORS[currentAmmoIndex].hex }} />
         </button>
       </footer>
     </div>
