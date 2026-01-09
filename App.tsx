@@ -41,12 +41,14 @@ const App: React.FC = () => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [currentAmmoIndex, setCurrentAmmoIndex] = useState(0);
+  const [showSpeedUp, setShowSpeedUp] = useState(false);
   
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLElement>(null);
   const requestRef = useRef<number>();
   
   const scoreRef = useRef(0);
+  const hitsRef = useRef(0);
   const livesRef = useRef(3);
   const ammoRef = useRef(0);
   const enemiesRef = useRef<Enemy[]>([]);
@@ -60,6 +62,7 @@ const App: React.FC = () => {
   const spawnCooldownRef = useRef(INITIAL_SPAWN_COOLDOWN);
   const framesSinceLastSpawnRef = useRef(0);
   const difficultyRef = useRef(1);
+  const speedMultiplierRef = useRef(1);
   const starsRef = useRef<Star[]>([]);
 
   const initStars = useCallback((width: number, height: number) => {
@@ -90,6 +93,7 @@ const App: React.FC = () => {
   const resetGame = () => {
     scoreRef.current = 0;
     setScore(0);
+    hitsRef.current = 0;
     livesRef.current = 3;
     setLives(3);
     ammoRef.current = 0;
@@ -98,6 +102,8 @@ const App: React.FC = () => {
     bulletsRef.current = [];
     particlesRef.current = [];
     velocityXRef.current = 0;
+    speedMultiplierRef.current = 1;
+    setShowSpeedUp(false);
     
     if (canvasRef.current) {
         playerXRef.current = canvasRef.current.width / 2 - CANNON_WIDTH / 2;
@@ -210,7 +216,8 @@ const App: React.FC = () => {
         y: -ENEMY_SIZE,
         width: ENEMY_SIZE, height: ENEMY_SIZE,
         colorIndex,
-        speed: INITIAL_ENEMY_SPEED * difficultyRef.current
+        // Combined multiplier: frame-based ramp + the 10% jumps per 25 hits
+        speed: INITIAL_ENEMY_SPEED * difficultyRef.current * speedMultiplierRef.current
       });
       framesSinceLastSpawnRef.current = 0;
       difficultyRef.current += 0.0015; 
@@ -239,8 +246,23 @@ const App: React.FC = () => {
             createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, COLORS[enemy.colorIndex].hex);
             enemiesRef.current.splice(eIdx, 1);
             bulletsRef.current.splice(bIdx, 1);
+            
+            // Score handling
             scoreRef.current += 10;
             setScore(scoreRef.current);
+            
+            // 25 Hit Difficulty Scaling
+            hitsRef.current += 1;
+            if (hitsRef.current > 0 && hitsRef.current % 25 === 0) {
+              speedMultiplierRef.current *= 1.1; // 10% increase
+              setShowSpeedUp(true);
+              setTimeout(() => setShowSpeedUp(false), 2000);
+              
+              // Apply boost to existing enemies immediately
+              enemiesRef.current.forEach(e => {
+                e.speed *= 1.1;
+              });
+            }
           }
         }
       });
@@ -356,6 +378,13 @@ const App: React.FC = () => {
         <main ref={containerRef} className="relative w-full max-w-[600px] h-full">
           <canvas ref={canvasRef} />
           
+          {/* Speed Up Notification */}
+          <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 z-40 ${showSpeedUp ? 'opacity-100' : 'opacity-0'}`}>
+             <div className="bg-yellow-500 text-black px-8 py-4 rounded-full font-black text-4xl italic tracking-tighter animate-bounce shadow-[0_0_50px_rgba(234,179,8,0.5)]">
+               SPEED UP!
+             </div>
+          </div>
+
           {gameState === GameState.PLAYING && (
             <div className="absolute top-4 left-4 p-2 bg-black/60 border border-white/10 rounded-xl flex items-center gap-3 backdrop-blur-md z-10">
               <div className="flex flex-col text-[10px]"><span className="text-slate-500 uppercase font-black">Ammo</span><span className="font-bold" style={{ color: COLORS[currentAmmoIndex].hex }}>{COLORS[currentAmmoIndex].name}</span></div>
