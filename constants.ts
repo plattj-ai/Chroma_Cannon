@@ -15,7 +15,5 @@ export const CANNON_HEIGHT = 40;
 export const BULLET_SIZE = 12;
 export const ENEMY_SIZE = 40;
 export const BULLET_SPEED = 8;
-// Original was 1.5. Reduced by 25%: 1.5 * 0.75 = 1.125
 export const INITIAL_ENEMY_SPEED = 1.125;
-export const SPAWN_RATE_INCREASE = 0.05;
 export const INITIAL_SPAWN_COOLDOWN = 80;
